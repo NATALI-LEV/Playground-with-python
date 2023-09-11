@@ -1,5 +1,6 @@
 import sys
 import pygame
+import random
 import numpy as np
 
 from constants import *
@@ -45,7 +46,7 @@ class Board:
     empty_sqrs = []
     for row in range(ROWS):
         for col in range(COLS):
-          if self.empty_sqrs(row, col):
+          if self.empty_sqr(row, col):
             empty_sqrs.append((row,col))
             
     return empty_sqrs
@@ -55,12 +56,36 @@ class Board:
     
   def isempty(self):
       return self.marked_sqrs == 0
+
+class AI:
+  
+  def __init__(self, level=1, player=2):
+    self.level = level
+    self.player = player
+
+  def rnd(self, board):
+    empty_sqrs = board.get_empty_sqrs()
+    idx = random.randrange(0,len(empty_sqrs))
     
+    return empty_sqrs[idx]
+    
+  def eval(self, main_board):
+    if self.level == 0:
+      move = self.rnd(main_board)
+    
+    else:
+      pass
+      
+    return move
+
 class Game:
     #######################
   def __init__(self):
       self.board = Board()
+      self.ai = AI()
       self.player = 1 # 1 - cross , 2 - circles
+      self.gamemode = 'ai' 
+      self.running = True
       self.show_lines()
 
   def show_lines(self):
@@ -89,6 +114,7 @@ def main():
   ########################
   game = Game()
   board = game.board
+  ai = game.ai
 
   while True:
 
@@ -112,6 +138,15 @@ def main():
 
           #print(board.squares)
 
+    if game.gamemode == 'ai' and game.player == ai.player:
+      pygame.display.update()
+      
+      row, col = ai.eval(board)
+    
+      board.mark_sqr(row, col, ai.player)
+      game.draw_fig(row, col)
+      game.next_turn()
+      
     pygame.display.update()
   
 main()
