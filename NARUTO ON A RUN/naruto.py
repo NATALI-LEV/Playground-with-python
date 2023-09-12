@@ -71,7 +71,30 @@ class Naruto:
     def stop(self):
         self.falling = False
         self.onground = True
-  
+
+class Pain:
+  def __init__(self, x):
+      self.width = 34
+      self.height = 44
+      self.x = x
+      self.y = 80
+      self.set_texture()
+      self.show()
+
+  def update(self, dx):
+      self.x += dx
+
+  def show(self):
+        screen.blit(self.texture, (self.x, self.y))
+
+  def set_texture(self):
+    path = os.path.join('assets/images/pain.png')  
+    self.texture = pygame.image.load(path)
+    self.texture = pygame.transform.scale(self.texture, (self.width, self.height))
+
+class collision:
+  pass
+
 class BG:
 
   def __init__(self, x):
@@ -100,6 +123,7 @@ class Game:
   def __init__(self):
     self.bg = [BG(x=0), BG(x=WIDTH)]
     self.naruto = Naruto()
+    self.obstacles = []
     self.speed = 0.5
   
 def main():
@@ -119,6 +143,10 @@ def main():
     
     naruto.update(loops)
     naruto.show()
+    
+    for pain in game.obstacles:
+      pain.update(-game.speed)
+      pain.show()
     
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
