@@ -41,6 +41,8 @@ class Game:
 def main():
   
   game = Game()  
+  clock = pygame.time.Clock()
+
   while True:
     
     for bg in game.bg:
@@ -53,6 +55,7 @@ def main():
         pygame.quit()
         sys.exit()
         
+    clock.tick(400)
     pygame.display.update()
 
 main()
