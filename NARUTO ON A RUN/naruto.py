@@ -206,7 +206,6 @@ class Game:
 
   def restart(self):
     self.__init__(hs=self.score.hs)
-
         
 def main():
   
