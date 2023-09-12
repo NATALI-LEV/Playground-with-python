@@ -44,7 +44,7 @@ class Naruto:
                 self.stop()
 
         # walking
-        elif self.onground and loops % 200 == 0:
+        elif self.onground and loops % 30 == 0:
             self.texture_num = (self.texture_num + 1) % 3
             self.set_texture()
         
@@ -76,10 +76,10 @@ class Naruto:
 
 class Pain:
   def __init__(self, x):
-      self.width = 34
-      self.height = 44
+      self.width = 25
+      self.height = 30
       self.x = x
-      self.y = 80
+      self.y = 100
       self.set_texture()
       self.show()
 
@@ -122,41 +122,91 @@ class BG:
     self.texture = pygame.image.load(path)
     self.texture = pygame.transform.scale(self.texture, (self.width, self.height))
 
+class Score:
+
+  def __init__(self, hs):
+    self.hs = hs
+    self.act = 0
+    self.font = pygame.font.SysFont('monospace', 18)
+    self.color = (0, 0, 0)
+    self.set_sound()
+    self.show()
+
+  def update(self, loops):
+    self.act = loops // 10
+    self.check_hs()
+    self.check_sound()
+
+  def show(self):
+    self.lbl = self.font.render(f'HI {self.hs} {self.act}', 1, self.color)
+    lbl_width = self.lbl.get_rect().width
+    screen.blit(self.lbl, (WIDTH - lbl_width - 10, 10))
+
+  def set_sound(self):
+    path = os.path.join('assets/sounds/point.wav')
+    self.sound = pygame.mixer.Sound(path)
+
+  def check_hs(self):
+    if self.act >= self.hs:
+      self.hs = self.act
+
+  def check_sound(self):
+    if self.act % 100 == 0 and self.act != 0:
+      self.sound.play()
+
 class Game:
 
-  def __init__(self):
+  def __init__(self, hs=0):
     self.bg = [BG(x=0), BG(x=WIDTH)]
     self.naruto = Naruto()
     self.obstacles = []
     self.collision = Collision()
-    self.speed = 0.5
+    self.score = Score(hs)
+    self.speed = 1
     self.playing = False
-  
+    self.set_sound()
+    self.set_labels()
+    self.spawn_pain()
+
+  def set_labels(self):
+      big_font = pygame.font.SysFont('monospace', 24, bold=True)
+      small_font = pygame.font.SysFont('monospace', 18)
+      self.big_lbl = big_font.render(f'G A M E  O V E R', 1, (0, 0, 0))
+      self.small_lbl = small_font.render(f'press r to restart', 1, (0, 0, 0))
+
+  def set_sound(self):
+      path = os.path.join('assets/sounds/die.wav')
+      self.sound = pygame.mixer.Sound(path)
+
   def start(self):
-    self.playing = True
-    
+      self.playing = True
+
   def over(self):
-    self.sound.play()
-    screen.blit(self.big_lbl, (WIDTH // 2 - self.big_lbl.get_width() // 2, HEIGHT // 4))
-    screen.blit(self.small_lbl, (WIDTH // 2 - self.small_lbl.get_width() // 2, HEIGHT // 2))
-    self.playing = False
-          
+      self.sound.play()
+      screen.blit(self.big_lbl, (WIDTH // 2 - self.big_lbl.get_width() // 2, HEIGHT // 4))
+      screen.blit(self.small_lbl, (WIDTH // 2 - self.small_lbl.get_width() // 2, HEIGHT // 2))
+      self.playing = False
+
   def tospawn(self, loops):
-        return loops % 100 == 0
+      return loops % 100 == 0
 
   def spawn_pain(self):
     # list with pain
     if len(self.obstacles) > 0:
       prev_pain = self.obstacles[-1]
-      x = random.randint(prev_pain.x + self.naruto.width + 84, WIDTH + prev_pain.x + self.naruto.width + 84)
-
-   # empty list
+      x = random.randint(int(prev_pain.x + self.naruto.width + 84), int(WIDTH + prev_pain.x + self.naruto.width + 84))
+      
+    # empty list
     else:
       x = random.randint(WIDTH + 100, 1000)
 
-  # create the new pain
+    # create the new pain
     pain = Pain(x)
     self.obstacles.append(pain)
+
+  def restart(self):
+    self.__init__(hs=self.score.hs)
+
         
 def main():
   
@@ -164,44 +214,65 @@ def main():
   naruto = game.naruto 
   clock = pygame.time.Clock()
   loops = 0
+  over = False
 
+    # mainloop
   while True:
-    
+
     if game.playing:
-    
+
       loops += 1
-      
+
+            # --- BG ---
       for bg in game.bg:
         bg.update(-game.speed)
         bg.show()
-      
-      naruto.update(loops)
-      naruto.show()
-      
-      if game.tospawn(loops):
-        game.spawn_pain()
-        
-      for pain in game.obstacles:
-        pain.update(-game.speed)
-        pain.show()
-      
-        if game.collision.between(naruto, pain):
-          over = True
-        
+
+        # --- naruto ---
+        naruto.update(loops)
+        naruto.show()
+
+            # --- pain ---
+        if game.tospawn(loops):
+          game.spawn_pain()
+
+        for pain in game.obstacles:
+          pain.update(-game.speed)
+          pain.show()
+
+                # collision
+          if game.collision.between(naruto, pain):
+             over = True
+            
+        if over:
+          game.over()
+
+            # -- score ---
+        game.score.update(loops)
+        game.score.show()
+
+        # events
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
         sys.exit()
-        
+            
       if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_SPACE:
-          if naruto.onground:
-            naruto.jump()
-            
-          if not game.playing:
-            game.start()
-                  
-    clock.tick(400)
+          if not over: 
+            if naruto.onground:
+              naruto.jump()
+
+            if not game.playing:
+              game.start()
+
+        if event.key == pygame.K_r:
+          game.restart()
+          naruto = game.naruto
+          loops = 0
+          over = False
+
+    clock.tick(80)
     pygame.display.update()
 
 main()
