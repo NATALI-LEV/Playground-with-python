@@ -1,6 +1,7 @@
 import os
 import sys
 import pygame
+import random
 
 WIDTH = 623
 HEIGHT = 150
@@ -126,6 +127,23 @@ class Game:
     self.obstacles = []
     self.speed = 0.5
   
+  def tospawn(self, loops):
+        return loops % 100 == 0
+
+  def spawn_pain(self):
+    # list with pain
+    if len(self.obstacles) > 0:
+      prev_pain = self.obstacles[-1]
+      x = random.randint(prev_pain.x + self.naruto.width + 84, WIDTH + prev_pain.x + self.naruto.width + 84)
+
+   # empty list
+    else:
+      x = random.randint(WIDTH + 100, 1000)
+
+  # create the new pain
+    pain = Pain(x)
+    self.obstacles.append(pain)
+        
 def main():
   
   game = Game() 
@@ -144,6 +162,9 @@ def main():
     naruto.update(loops)
     naruto.show()
     
+    if game.tospawn(loops):
+      game.spawn_pain()
+      
     for pain in game.obstacles:
       pain.update(-game.speed)
       pain.show()
