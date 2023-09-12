@@ -18,10 +18,10 @@ class Naruto:
         self.y = 80
         self.texture_num = 0
         self.dy = 3
-        self.gravity = 1.2
+        self.gravity = 0.3
         self.onground = True
         self.jumping = False
-        self.jump_stop = 10
+        self.jump_stop = 2
         self.falling = False
         self.fall_stop = self.y
         self.set_texture()
@@ -42,7 +42,7 @@ class Naruto:
                 self.stop()
 
         # walking
-        elif self.onground and loops % 4 == 0:
+        elif self.onground and loops % 200 == 0:
             self.texture_num = (self.texture_num + 1) % 3
             self.set_texture()
         
@@ -51,7 +51,7 @@ class Naruto:
         screen.blit(self.texture, (self.x, self.y))
 
     def set_texture(self):
-        path = os.path.join(f'assets/images/naruto_stand.png')
+        path = os.path.join(f'assets/images/naruto{self.texture_num}.png')
         self.texture = pygame.image.load(path)
         self.texture = pygame.transform.scale(self.texture, (self.width, self.height))
 
@@ -104,22 +104,32 @@ class Game:
   
 def main():
   
-  game = Game()  
+  game = Game() 
+  naruto = game.naruto 
   clock = pygame.time.Clock()
+  loops = 0
 
   while True:
+    
+    loops += 1
     
     for bg in game.bg:
       bg.update(-game.speed)
       bg.show()
     
-    game.naruto.show()
+    naruto.update(loops)
+    naruto.show()
     
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
         sys.exit()
         
+      if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_SPACE:
+          if naruto.onground:
+            naruto.jump()
+                  
     clock.tick(400)
     pygame.display.update()
 
