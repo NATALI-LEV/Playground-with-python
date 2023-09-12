@@ -2,6 +2,7 @@ import os
 import sys
 import pygame
 import random
+import math
 
 WIDTH = 623
 HEIGHT = 150
@@ -93,8 +94,10 @@ class Pain:
     self.texture = pygame.image.load(path)
     self.texture = pygame.transform.scale(self.texture, (self.width, self.height))
 
-class collision:
-  pass
+class Collision:
+  def between(self, obj1, obj2):
+    distance = math.sqrt((obj1.x - obj2.x)**2 + (obj1.y - obj2.y)**2)
+    return distance < 35
 
 class BG:
 
@@ -125,8 +128,19 @@ class Game:
     self.bg = [BG(x=0), BG(x=WIDTH)]
     self.naruto = Naruto()
     self.obstacles = []
+    self.collision = Collision()
     self.speed = 0.5
+    self.playing = False
   
+  def start(self):
+    self.playing = True
+    
+  def over(self):
+    self.sound.play()
+    screen.blit(self.big_lbl, (WIDTH // 2 - self.big_lbl.get_width() // 2, HEIGHT // 4))
+    screen.blit(self.small_lbl, (WIDTH // 2 - self.small_lbl.get_width() // 2, HEIGHT // 2))
+    self.playing = False
+          
   def tospawn(self, loops):
         return loops % 100 == 0
 
@@ -153,22 +167,27 @@ def main():
 
   while True:
     
-    loops += 1
+    if game.playing:
     
-    for bg in game.bg:
-      bg.update(-game.speed)
-      bg.show()
-    
-    naruto.update(loops)
-    naruto.show()
-    
-    if game.tospawn(loops):
-      game.spawn_pain()
+      loops += 1
       
-    for pain in game.obstacles:
-      pain.update(-game.speed)
-      pain.show()
-    
+      for bg in game.bg:
+        bg.update(-game.speed)
+        bg.show()
+      
+      naruto.update(loops)
+      naruto.show()
+      
+      if game.tospawn(loops):
+        game.spawn_pain()
+        
+      for pain in game.obstacles:
+        pain.update(-game.speed)
+        pain.show()
+      
+        if game.collision.between(naruto, pain):
+          over = True
+        
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
@@ -178,6 +197,9 @@ def main():
         if event.key == pygame.K_SPACE:
           if naruto.onground:
             naruto.jump()
+            
+          if not game.playing:
+            game.start()
                   
     clock.tick(400)
     pygame.display.update()
