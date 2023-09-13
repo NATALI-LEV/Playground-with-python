@@ -2,7 +2,7 @@ import requests
 import json
 
 # enter your own key from the openweathermap website
-api_key = ''
+api_key = 'ENTER YOUR OWN KEY'
 
 # function that gets the weather info about an input city from API request
 def get_weather_data(city_name):
