@@ -23,7 +23,16 @@ def get_weather_data(city_name):
         print(response.text)  # prints the error for testing
         return None
 
-
+# display and print the data about the city thats requested
+def display_weather_data(data):
+    if data:
+        print(f"Weather in {data['name']}, {data['sys']['country']}:")
+        print(f"Temperature: {data['main']['temp']}°C")
+        print(f"Description: {data['weather'][0]['description']}")
+        print(f"Humidity: {data['main']['humidity']}%")
+        print(f"Wind Speed: {data['wind']['speed']} m/s")
+    else:
+        print("City not found or API request failed.")
 
 # main
 if __name__ == "__main__":
