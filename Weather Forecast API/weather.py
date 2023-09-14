@@ -23,7 +23,7 @@ def get_weather_data(city_name):
         print(response.text)  # prints the error for testing
         return None
 
-# display and print the data about the city thats requested
+# Display and print the data about the city thats requested
 def display_weather_data(data):
     if data:
         print(f"Weather in {data['name']}, {data['sys']['country']}:")
