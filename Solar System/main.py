@@ -8,12 +8,13 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Solar Simulation")
 
 # Define colors
+WHITE = (255, 255, 255)
 PINK = (255,182,193)
 YELLOW = (255, 255, 0)
 GREEN = (52, 165, 111)
 RED = (188, 39, 50)
 GREY = (183, 184, 185)
-
+GLITER = (230, 232, 250)
 # Create a font object
 FONT = pygame.font.SysFont("comicsans", 16)
 
@@ -27,7 +28,7 @@ class Planet:
     SCALE = 250 / AU  # 1AU equals to 100 pixels
     TIMESTEP = 3600*24 # 1 day
 
-    def __init__(self, x, y, radius, color, mass):
+    def __init__(self, x, y, radius, color, mass ):
         self.x = x
         self.y = y
         self.radius = radius
@@ -62,7 +63,7 @@ class Planet:
 		
         # Show the distance to the Sun for all planets except the Sun itself 
         if not self.sun:
-            distance_text = FONT.render(f"{round(self.distance_to_sun/1000, 1)}km", 1, PINK)
+            distance_text = FONT.render(f"{round(self.distance_to_sun/1000, 1)}km", 1, GLITER)
             win.blit(distance_text, (x - distance_text.get_width()/2, y - distance_text.get_height()/2))
         
     
@@ -112,7 +113,41 @@ class Planet:
         # Record the current position in the orbit path
         self.orbit.append((self.x, self.y))
  
+class Moon(Planet):
+    def __init__(self, earth, radius, color, mass):
+        # Initialize the moon with an initial position farther from Earth
+        x = earth.x - 0.2 * Planet.AU  # Adjust the x position as needed
+        y = earth.y  # Keep the same y position as Earth
+        super().__init__(x, y, radius, color, mass)
+        self.earth = earth  # Reference to the Earth planet
+        self.angle = 0  # Angle to track moon's rotation around Earth
+        self.angular_velocity = 0.01 * 12  
 
+    def update_position(self, planets):
+        # Update the moon's position relative to Earth (while Earth is orbiting the Sun)
+        self.x = self.earth.x + (self.x - self.earth.x) * math.cos(Planet.TIMESTEP)
+        self.y = self.earth.y + (self.y - self.earth.y) * math.sin(Planet.TIMESTEP)
+
+        # Calculate the moon's position relative to Earth in a circular orbit
+        self.x = self.earth.x + 0.2 * Planet.AU * math.cos(self.angle)
+        self.y = self.earth.y + 0.2 * Planet.AU * math.sin(self.angle)
+
+        # Increment the angle for the next frame to simulate moon's rotation
+        self.angle += self.angular_velocity  # Adjust the rotation speed as needed
+
+        # Record the current position in the orbit path
+        self.orbit.append((self.x, self.y))
+        
+    def draw(self, win):
+    #prevent the moon from drawing its orbit path 
+        # Convert moon's position to screen coordinates
+        x = self.x * self.SCALE + WIDTH / 2
+        y = self.y * self.SCALE + HEIGHT / 2
+
+        # Draw the moon as a circle without an orbit path
+        pygame.draw.circle(win, self.color, (x, y), self.radius)
+
+        
 def main():
     run = True
     WIN.blit(background, (0, 0))
@@ -135,7 +170,11 @@ def main():
     venus = Planet(0.723 * Planet.AU, 0, 14, PINK, 4.8685 * 10**24)
     venus.y_vel = -35.02 * 1000
     
-    planets = [sun, earth, mars, mercury, venus]
+# Create the Moon for Earth
+    moon = Moon(earth, 4, WHITE, 7.342 * 10**22)
+    moon.y_vel = 29.783 * 1000 + 1.02 * 1000  # Adjust the initial velocity as needed
+    
+    planets = [sun, earth, mars, mercury, venus,moon]
     
     while run:
         clock.tick(60)
