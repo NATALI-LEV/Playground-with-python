@@ -13,14 +13,14 @@ class Planet:
     AU = 149.6e6 * 1000 # astronomical units - distance of earth to the sun
     G = 6.67428e-11 # gravity
     SCALE = 250 / AU  # 1AU equals to 100 pixels
-    TIMESTEP = 3600*24 # 1 day
+	TIMESTEP = 3600*24 # 1 day
 
     def __init__(self, x, y, radius, color, mass):
         self.x = x
-        self.y = y
-        self.radius = radius
-        self.color = color
-        self.mass = mass
+		self.y = y
+		self.radius = radius
+		self.color = color
+		self.mass = mass
   
         self.orbit = []
         self.sun = False
@@ -28,7 +28,7 @@ class Planet:
           
         #moving in circle
         self.x_vel = 0 
-        self.y_vel = 0
+		self.y_vel = 0
 
 def main():
     run = True
