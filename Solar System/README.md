@@ -1,43 +1,56 @@
-##Solar System simulation in Python(rotation):
-This Python project offers a captivating planet simulation, providing a visual representation of celestial bodies' movements within our solar system. The simulation includes the Sun, Earth, Mars, Mercury, and Venus, each with accurate initial conditions such as mass, velocity, and orbit.
 
-##Key Features:
-Astronomy and Math basics.
-Realistic planetary motion using Newton's law of universal gravitation.
-Visualization of orbits and distances from the Sun.
-Adjustable time step for dynamic simulation control.
-An intuitive and interactive graphical interface using Pygame.
+# Solar System Simulation in Python (Rotation)
 
-remember:
-rotations, gravity, and distances are essential elements in simulating planetary motion. Rotations create day-night cycles, gravity governs celestial body interactions, and distances determine positions and orbits. These factors come together to create dynamic and realistic planetary simulations.
+This Python project offers an engaging planetary simulation, providing a visually captivating representation of celestial bodies' movements within our solar system. The simulation includes the Sun, Earth&Moon, Mars, Mercury, and Venus, each with accurate initial conditions such as mass, velocity, and orbit.
 
-This code simulates a basic planetary system using Python and Pygame. It includes several physics and math formulas. Here's a list of the key formulas being used in the code:
+## Key Features
+- **Astronomy and Math Basics**: This project incorporates fundamental principles of astronomy and mathematics to create a realistic simulation of our solar system.
+- **Realistic Planetary Motion**: The simulation uses Newton's Law of Universal Gravitation to accurately model the gravitational interactions between celestial bodies.
+- **Orbit Visualization**: You can observe the orbits and distances of planets from the Sun, gaining insights into their movements.
+- **Adjustable Time Step**: Take control of the simulation's dynamics with an adjustable time step, allowing you to speed up or slow down time.
+- **Intuitive Graphical Interface**: The interactive graphical interface built using Pygame makes it easy to explore and enjoy the solar system simulation.
 
-Newton's Law of Universal Gravitation:
+## Key Formulas
+### Newton's Law of Universal Gravitation
+**Formula**: F = (G * m1 * m2) / r^2
+**Explanation**: Calculates the gravitational force (F) between two objects with masses (m1 and m2) separated by a distance (r). G represents the gravitational constant.
 
-Formula: F = (G * m1 * m2) / r^2
-Explanation: Calculates the Attraction/gravitational force between two objects with masses m1 and m2, separated by a distance r. F is the gravitational force, G is the gravitational constant.
-Distance Calculation:
+### Distance Calculation
+**Formula**: distance = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+**Explanation**: Calculates the distance between two points (x1, y1) and (x2, y2) using the Pythagorean theorem.
 
-Formula: distance = sqrt((x2 - x1)^2 + (y2 - y1)^2)
-Explanation: Calculates the distance between two points (x1, y1) and (x2, y2) using the Pythagorean theorem.
-Angle Calculation:
+### Angle Calculation
+**Formula**: theta = atan2(y, x)
+**Explanation**: Calculates the angle (theta) between the x-axis and a line connecting two points with coordinates (x, y).
 
-Formula: theta = atan2(y, x)
-Explanation: Calculates the angle (theta) between the x-axis and a line connecting two points with coordinates (x, y).
-Velocity Update Using Force:
+### Velocity Update Using Force
+**Formula**: F = m * a
+**Explanation**: Newton's second law relates force (F), mass (m), and acceleration (a). It's used to update the velocity of the planets based on the total force acting on them.
 
-Formula: F = m * a
-Explanation: Newton's second law relates force (F), mass (m), and acceleration (a). In this case, it is used to update the velocity of the planets based on the total force acting on them.
-Position Update Using Velocity:
+### Position Update Using Velocity
+**Formula**: x = x + (v * t)
+**Explanation**: Updates the position (x) of an object based on its velocity (v) and a given time step (t).
 
-Formula: x = x + (v * t)
-Explanation: Updates the position (x) of an object based on its velocity (v) and a given time step (t).
-Scaling Factor for Simulation:
-
-Formula: Scaled_position = Real_position * SCALE + (WIDTH / 2, HEIGHT / 2)
-Explanation: Scales real-world positions to fit the screen and center them on the screen.
+### Scaling Factor for Simulation
+**Formula**: Scaled_position = Real_position * SCALE + (WIDTH / 2, HEIGHT / 2)
+**Explanation**: Scales real-world positions to fit the screen and centers them on the screen.
 
 
-note : The background picture was taken by my loving partner at a night full of stars and northen lights in Vik , iceland  
+*Background Picture Credits: Taken by my loving partner during a night full of stars and Northern Lights in Vik, Iceland.*
+
+
+## Installation
+To run the simulation on your local machine, follow these steps:
+
+1. Clone this repository.
+   ```sh
+   git clone https://github.com/your-username/solar-system-simulation.git
+
+
+2. Install the required dependencies.
+    pip install pygame
+
+3. Run the simulation.
+    python main.py
+
 
