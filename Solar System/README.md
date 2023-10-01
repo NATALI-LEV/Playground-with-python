@@ -3,6 +3,8 @@
 
 This Python project offers an engaging planetary simulation, providing a visually captivating representation of celestial bodies' movements within our solar system. The simulation includes the Sun, Earth&Moon, Mars, Mercury, and Venus, each with accurate initial conditions such as mass, velocity, and orbit.
 
+![solar](solar.png)
+
 ## Key Features
 - **Astronomy and Math Basics**: This project incorporates fundamental principles of astronomy and mathematics to create a realistic simulation of our solar system.
 - **Realistic Planetary Motion**: The simulation uses Newton's Law of Universal Gravitation to accurately model the gravitational interactions between celestial bodies.
