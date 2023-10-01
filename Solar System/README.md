@@ -48,9 +48,11 @@ To run the simulation on your local machine, follow these steps:
 
 
 2. Install the required dependencies.
+    ```sh
     pip install pygame
 
 3. Run the simulation.
+    ```sh
     python main.py
 
 
