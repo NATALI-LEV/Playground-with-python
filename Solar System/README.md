@@ -54,5 +54,3 @@ To run the simulation on your local machine, follow these steps:
 3. Run the simulation.
     ```sh
     python main.py
-
-
