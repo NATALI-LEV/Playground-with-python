@@ -45,20 +45,46 @@ class Planet:
     
     def attraction(self, other):
     #calculates the force of attarction between another object and the current object
+    
+        #first we calculated the distance between 2 objects
         other_x, other_y = other.x, other.y
         distance_x = other_x - self.x
         distance_y = other_y - self.y
         distance = math.sqrt(distance_x ** 2 + distance_y ** 2)
-  
+
+        #if the other is a sun - store it
         if other.sun:
             self.distance_to_sun = distance
         
         force = self.G * self.mass * other.mass / distance**2
+        #force of attraction/gravitational formula
         theta = math.atan2(distance_y, distance_x)
         #atan2 = take the y over the x and give us the angle associates with
         force_x = math.cos(theta) * force
         force_y = math.sin(theta) * force
         return force_x, force_y
+    
+    def update_position(self, planets):
+        #update position and move by velocity
+        total_fx = total_fy = 0
+        for planet in planets:
+            if self == planet:
+                continue
+            
+            fx, fy = self.attraction(planet) #for every planet we calculat the fx, fy 
+            total_fx += fx
+            total_fy += fy
+            
+            #calculating the velocity 
+            # F = m / a 
+            # a = F / m 
+            self.x_vel += total_fx / self.mass * self.TIMESTEP
+            self.y_vel += total_fy / self.mass * self.TIMESTEP
+
+            #update x and y positions by using the velocity and multi by timestep
+            self.x += self.x_vel * self.TIMESTEP
+            self.y += self.y_vel * self.TIMESTEP
+            self.orbit.append((self.x, self.y))
  
 
 def main():
@@ -88,6 +114,7 @@ def main():
                 run = False
                 
         for planet in planets:
+            planet.update_position(planets)
             planet.draw(WIN)
             
         pygame.display.update() 
