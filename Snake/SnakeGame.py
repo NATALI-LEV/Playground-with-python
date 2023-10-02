@@ -7,9 +7,9 @@ GAME_HEIGHT = 700
 SPEED = 160
 SPACE_SIZE = 50
 BODY_PARTS = 3
-SNAKE_COLOR = "#00FF00"
-FOOD_COLOR = "#FF0000"
-BACKGROUND_COLOR = "#000000"
+SNAKE_COLOR = "#097969"
+FOOD_COLOR = "#DE3163"
+BACKGROUND_COLOR = "#B0C4DE"
 
 # Snake class to manage the snake's attributes
 class Snake:
@@ -124,12 +124,46 @@ def game_over():
     canvas.delete(ALL)
     canvas.create_text(
         canvas.winfo_width() / 2,
-        canvas.winfo_height() / 2,
+        canvas.winfo_height() / 2 - 50,  # Adjusted vertical position
         font=("consolas", 70),
         text="GAME OVER",
         fill="red",
         tag="gameover",
     )
+    
+    # Display "Press 'r' to restart"
+    canvas.create_text(
+        canvas.winfo_width() / 2,
+        canvas.winfo_height() / 2 + 50,  # Adjusted vertical position
+        font=("consolas", 30),  # Adjusted font size
+        text="Press 'r' to restart",
+        fill="white",
+        tag="restart",
+    )
+    
+    # Bind the 'r' key to restart the game
+    window.bind('r', restart_game)
+
+# Function to restart the game
+def restart_game(event):
+    global score, direction
+    
+    # Reset score and direction
+    score = 0
+    direction = "down"
+    
+    # Clear canvas
+    canvas.delete(ALL)
+    
+    # Create a new label for the score
+    label.config(text="Score:{}".format(score))
+    
+    # Create a new snake and food
+    snake = Snake()
+    food = Food()
+    
+    # Start the game loop
+    next_turn(snake, food)
 
 # Create the main window
 window = Tk()
