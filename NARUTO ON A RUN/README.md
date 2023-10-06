@@ -2,7 +2,7 @@
 
 This is a simple jumping game implemented in Python using the Pygame library. In this game, you control the character "Naruto" and your goal is to jump over obstacles to score points. The game continues until you collide with an obstacle or press the "R" key to restart.
 
-## Prerequisites
+## Requirments
 
 Before you can run the game, you need to have Python and the Pygame library installed on your computer. You can install Pygame using pip:
 
@@ -34,7 +34,7 @@ Before you can run the game, you need to have Python and the Pygame library inst
 
 ## Game Logic
 
-- Naruto can jump and must avoid obstacles to survive.
+- Naruto can jump and must avoid Pain to survive.
 - The game speed gradually increases, making it more challenging as you progress.
 - Your highest score is tracked and displayed.
 - Special sound effects play when you reach certain score milestones.
@@ -49,9 +49,5 @@ The code is organized into several classes:
 - `BG`: Manages the scrolling background.
 - `Score`: Handles scoring and displays the high score.
 - `Game`: The main game class that orchestrates the game loop and interactions.
-
-## Contributions
-
-Feel free to contribute to this game by adding new features, improving the graphics, or optimizing the code. Pull requests are welcome!
 
 Enjoy playing Naruto Jumping Game!
