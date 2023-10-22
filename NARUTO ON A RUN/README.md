@@ -50,4 +50,4 @@ The code is organized into several classes:
 - `Score`: Handles scoring and displays the high score.
 - `Game`: The main game class that orchestrates the game loop and interactions.
 
-Enjoy playing Naruto Jumping Game!
+Enjoy playing my Naruto Game!
