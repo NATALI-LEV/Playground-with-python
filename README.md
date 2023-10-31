@@ -2,6 +2,11 @@
 
 ## Building a few games and small apps for fun and practice
 
+### latest practice sheets:
+
+* Text-summarization with Hugging Face
+* FileOrganizer
+
 ### A mix of Math, Astronomy and python:
 
 * Solar system

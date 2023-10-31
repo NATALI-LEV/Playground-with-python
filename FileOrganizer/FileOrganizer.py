@@ -23,3 +23,5 @@ for file in files:
         os.makedirs(path + '/' + extension)
         # Then, move the file into the newly created directory
         shutil.move(path + '/' + file, path + '/' + extension + '/' + file)
+
+#run the code , enter the path and enjoy! 
