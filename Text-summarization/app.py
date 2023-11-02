@@ -34,5 +34,5 @@ def summarize():
     return render_template("output.html", data={"summary": summary_text})
 
 if __name__ == '__main__':
-    # Start the Flask application if the script is run directly
+    # Start the Flask application if the script is run  directly
     app.run()
