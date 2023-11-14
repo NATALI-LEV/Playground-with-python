@@ -6,6 +6,8 @@
 
 * Text-summarization with Hugging Face
 * FileOrganizer
+* Scraping
+* sorting algorithms visualized with pygame.
 
 ### A mix of Math, Astronomy and python:
 
