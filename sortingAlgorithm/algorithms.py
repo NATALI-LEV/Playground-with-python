@@ -152,7 +152,7 @@ def main():
 	sorting_algo_name = "Bubble Sort"
 	sorting_algorithm_generator = None
 
-	# Main game loop
+	# Main game loop  
 	while run:
 		clock.tick(45)
 
