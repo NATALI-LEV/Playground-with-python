@@ -271,7 +271,7 @@ def main():
                 if event.key == pygame.K_1:
                     ai.level = 1
 
-            # click event
+            # click event  
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = event.pos
                 row = pos[1] // SQSIZE
