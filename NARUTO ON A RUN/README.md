@@ -6,8 +6,8 @@ This is a simple jumping game implemented in Python using the Pygame library. In
 
 Before you can run the game, you need to have Python and the Pygame library installed on your computer. You can install Pygame using pip:
 
-```bash
-        pip install pygame
+
+pip install pygame
 
 
 ## Game Features
