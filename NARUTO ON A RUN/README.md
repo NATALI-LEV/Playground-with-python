@@ -52,4 +52,4 @@ The code is organized into several classes:
 
 Enjoy playing my Naruto Game!
 
-![screenshot](Screenshot/naruto.png)
+![screenshot](screenshot/naruto.png)
