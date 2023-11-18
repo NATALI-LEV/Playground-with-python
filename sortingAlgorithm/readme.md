@@ -14,3 +14,5 @@ Once the program starts, you can perform the following actions:
 - I - Choose Insertion Sort algorithm.
 - B - Choose Bubble Sort algorithm.
 The visualization window displays the sorting process graphically. Bars represent elements, and their positions change as the sorting progresses.
+
+![screenshot](screenshot/sorting.png)
