@@ -16,9 +16,7 @@ The Snake game involves controlling a snake that moves around the screen, consum
 ## Instructions to Run
 
 To run the game, make sure you have Python installed. Execute the Python script `snake_game.py` in your preferred Python environment or terminal.
-- 'r' Key: Restart the game after game over.
 
-```bash
-python snake_game.py
+- 'r' Key: Restart the game after game over.
 
 ![Snake Game Screenshot](screenshot/snake.png)
