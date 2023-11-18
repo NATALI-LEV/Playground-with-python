@@ -15,3 +15,5 @@ This is a simple implementation of Tic Tac Toe (also known as Noughts and Crosse
 - Restart the game with the 'r' key.
 - Toggle between game modes with the 'g' key.
 - In-game instructions to guide you on how to play and interact with the AI.
+
+![screenshot](screenshot/tictactoe.png)
