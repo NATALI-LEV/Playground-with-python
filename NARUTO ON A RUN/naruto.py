@@ -273,5 +273,4 @@ def main():
 
     clock.tick(80)
     pygame.display.update()
-
 main()
